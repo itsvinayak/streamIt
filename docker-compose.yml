@@ -1,0 +1,42 @@
+version: '3.7'
+
+services:
+
+  client:
+    container_name: clientApp
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - '.:/client'
+      - '/client/node_modules'
+    ports:
+      - 3000:3000
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+
+  api:
+      container_name: apiServer
+      build:
+        context: .
+        dockerfile: Dockerfile
+      volumes:
+        - '.:/api'
+        - '/api/node_modules'
+      ports:
+        - 3001:3001
+      environment:
+        - CHOKIDAR_USEPOLLING=true
+
+   rtmpserver:
+      container_name: rtmpServer
+      build:
+        context: .
+        dockerfile: Dockerfile
+      volumes:
+        - '.:/server'
+        - '/server/node_modules'
+      ports:
+        - 8000:8000
+      environment:
+        - CHOKIDAR_USEPOLLING=true
